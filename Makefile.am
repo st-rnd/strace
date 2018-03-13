@@ -399,6 +399,7 @@ EXTRA_DIST =				\
 	CREDITS				\
 	ChangeLog			\
 	ChangeLog-CVS			\
+	README-configure		\
 	README-linux-ptrace		\
 	debian/changelog		\
 	debian/compat			\
