@@ -2,7 +2,25 @@ V4L2_CID_BASE				(V4L2_CTRL_CLASS_USER | 0x900)
 V4L2_CID_USER_MEYE_BASE			(V4L2_CID_BASE + 0x1000)
 V4L2_CID_USER_BTTV_BASE			(V4L2_CID_BASE + 0x1010)
 V4L2_CID_USER_TI_VPE_BASE		(V4L2_CID_BASE + 0x1050)
-V4L2_CID_USER_IMX_BASE			(V4L2_CID_BASE + 0x1090)
+
+#ifndef STRACE_WORKAROUND_FOR_V4L2_CID_USER_IMX_BASE
+# define STRACE_WORKAROUND_FOR_V4L2_CID_USER_IMX_BASE
+/*
+ * Linux commit v4.18-rc2-106-g421860b9d470 has changed the value of
+ * V4L2_CID_USER_IMX_BASE constant introduced by Linux commit
+ * v4.13-rc1~141^2~121 which is of course an ABI breakage that affects kernels
+ * from 4.13 up to 4.18 as well as their LTS derivatives.
+ * Linux commit v4.18-rc2-106-g421860b9d470 also claims that the old value
+ * of V4L2_CID_USER_IMX_BASE resulted in a conflict with
+ * V4L2_CID_USER_MAX217X_BASE. Since imx driver didn't have any public control
+ * ID definitions (V4L2_CID_IMX_FIM_ENABLE is defined in a non-UAPI header),
+ * it looks like that the best way to handle the situation is to pretend
+ * that the old value of V4L2_CID_USER_IMX_BASE didn't exist.
+ */
+# undef V4L2_CID_USER_IMX_BASE
+#endif
+V4L2_CID_USER_IMX_BASE			(V4L2_CID_BASE + 0x10b0)
+
 V4L2_CID_MPEG_BASE			(V4L2_CTRL_CLASS_MPEG | 0x900)
 V4L2_CID_MPEG_CX2341X_BASE		(V4L2_CTRL_CLASS_MPEG | 0x1000)
 V4L2_CID_MPEG_MFC51_BASE		(V4L2_CTRL_CLASS_MPEG | 0x1100)
